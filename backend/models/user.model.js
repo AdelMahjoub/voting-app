@@ -88,7 +88,7 @@ const userSchema = db.Schema({
     //minimum length of the password is 6 characters
     validate: {
       validator: function(value) {
-        return value >= 6;
+        return value.length >= 6;
       },
       msg: 'Password length, 6 characters minimum.'
     }

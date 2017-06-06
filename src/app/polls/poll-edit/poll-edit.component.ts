@@ -326,12 +326,12 @@ export class PollEditComponent implements OnInit, OnDestroy, CanComponentDeactiv
  // Copy poll url to clipboard
   onCopy() {
     let input = document.createElement('input');
-    input.setAttribute('display', 'none');
     document.body.appendChild(input);
     input.value = location.href;
     input.select();
     document.execCommand('copy');
     this.notificationService.newNotification('Link copied to clipboard');
+    document.body.removeChild(input);
     return false;
   }
 

@@ -176,13 +176,13 @@ export class PollDetailsComponent implements OnInit, OnDestroy {
    */
   onCopy() {
     let input = document.createElement('input');
-    input.setAttribute('display', 'none');
     document.body.appendChild(input);
     input.value = location.href;
     input.select();
     document.execCommand('copy');
     this.notificationService.newNotification('Link copied to clipboard');
     this.notify();
+    document.body.removeChild(input);
     return false;
   }
 
