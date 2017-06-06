@@ -1,0 +1,100 @@
+<div *ngIf="poll" [@slideUp]>
+  <form (ngSubmit)="onVote()" [formGroup]="voteForm">
+    <div class="well poll-container">
+      <legend [@slideIn]>{{ poll.title | capitalize }}</legend>
+        <div class="form-group">
+          <div 
+            class="radio" *ngFor="let option of poll.options"
+            [@slideInRight]>
+            <label>
+              <input 
+                type="radio"
+                name="option"
+                [value]="option._id"
+                ngModel
+                [formControlName]="'option'"
+                required>
+              {{ option.label | capitalize }}
+            </label>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <button 
+        type="submit" 
+        class="btn btn-primary"
+        [disabled]="voteForm.invalid">Vote</button>
+      <div class="pull-right">
+        <button 
+          type="button" 
+          class="btn btn-info"
+          [routerLink]="['../chart', poll._id]"
+          title="chart"><i class="fa fa-bar-chart"></i></button>
+        <button 
+          type="button" 
+          class="btn btn-success"
+          title="tweet"
+          (click)="onTweet()"><i class="fa fa-share"></i></button>
+        <button 
+          type="button" 
+          class="btn btn-default"
+          title="copy url"
+          (click)="onCopy()"><i class="fa fa-link"></i></button>
+      </div>
+    </form>
+</div>
+
+<!-- User not logged in -->
+<div class="row" *ngIf="authInvite" style="margin-top: 10px;"[@slideInRight]>
+  <div class="col-xs-12 col-md-12">
+    <div class="alert alert-warning">
+      <p>Please <a [routerLink]="['/auth/login']">Login</a> or <a [routerLink]="['/auth/signup']">Signup</a> to participate.</p>
+    </div>
+  </div>
+</div>
+
+<!-- User Already voted -->
+<div class="row" *ngIf="alreadyVoted" style="margin-top: 10px;"[@slideInRight]>
+  <div class="col-xs-12 col-md-12">
+    <div class="alert alert-info">
+      <strong>You have already voted in this poll.</strong>
+    </div>
+  </div>
+</div>
+
+<!-- User Already voted -->
+<div class="row" *ngIf="voteSuccess" style="margin-top: 10px;"[@slideInRight]>
+  <div class="col-xs-12 col-md-12">
+    <div class="alert alert-success">
+      <strong>Participation success. Thank you for your vote !</strong>
+    </div>
+  </div>
+</div>
+
+<!-- Server validation errors -->
+<div class="row" *ngIf="serverValidations.length > 0" style="margin-top: 10px;"[@slideInRight]>
+  <div class="col-xs-12 col-md-12">
+    <div class="alert alert-danger">
+      <p *ngFor="let msg of serverValidations">
+        <strong>{{ msg }}</strong>
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12 col-md-12">
+    <!-- Notification messages for user actions such copy link -->  
+    <div class="pull-right">
+      <p 
+        *ngIf="message"
+        [@notify]="notificationState" 
+        class="text-success" 
+        style="font-weight: bold;"><br>{{message}}</p>
+    </div>
+  </div>
+</div>
+
+
+
+

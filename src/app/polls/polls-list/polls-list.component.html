@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-xs-12">
+    <!-- Search -->
+    <div class="form-group">
+      <div class="input-group">
+        <input 
+          type="text" 
+          class="form-control" 
+          placeholder="Search"
+          name="searchTerm"
+          [(ngModel)]="searchTerm">
+        <span class="input-group-addon">
+          <i class="glyphicon glyphicon-search"></i>
+        </span>
+      </div>
+    </div>
+
+    <!-- Sort -->
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">Sort</span>
+        <select 
+          class="form-control"
+          (change)="onSortFilterChange($event)">
+          <option 
+            *ngFor="let key of sortFilters"
+            [value]="key">{{ key | titlecase }}</option>
+        </select>
+      </div>
+    </div>    
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <hr>
+  </div>
+</div>
+
+<!-- deploy or hide the polls list on small devices -->
+<div class="row visible-xs visible-sm text-center">
+  <button 
+    type="button" 
+    class="btn btn-default"
+    (click)="onOpen()"><i class="fa" [ngClass]="{'fa-chevron-up': listDeployed, 'fa-chevron-down': !listDeployed}"></i></button>
+  <div class="col-xs-12">
+    <hr>
+  </div>
+</div>
+
+<div class="list-container">
+  <!-- polls list, hidden by default on small devices -->
+  <div class="row hidden-xs hidden-sm" *ngIf="polls" #collapse>
+    <app-poll-item
+    *ngFor="let poll of polls | search: searchTerm | sort: sortBy; let i = index" 
+    [poll]="poll" 
+    [index]="i"></app-poll-item>
+  </div>
+
+</div>

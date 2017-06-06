@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-xs-12 col-md-12">
+    <a 
+      [routerLink]="'new'"
+      class="btn btn-success">New Poll</a>
+    <!-- Notification messages for user actions such as add, delete or update a poll -->  
+    <div class="pull-right">
+      <p 
+        *ngIf="message"
+        [@notify]="notificationState" 
+        class="text-success" 
+        style="font-weight: bold;">{{message}}</p>
+    </div>
+  </div>
+</div>
+
+<!-- Horizontal line -->
+<div class="row">
+  <div class="col-xs-12 col-md-12">
+    <hr>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12 col-md-6 col-lg-5">
+    <app-polls-list [polls]="polls"></app-polls-list>
+  </div>
+    
+  <!-- Horizontal line for small devices -->
+  <div class="col-xs-12 col-sm-12 visible-xs visible-sm">
+    <hr>
+  </div>
+  
+  <div class="col-xs-12 col-md-6 col-lg-7">
+    <router-outlet></router-outlet>
+  </div>
+</div>

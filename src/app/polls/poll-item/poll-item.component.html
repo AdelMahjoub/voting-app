@@ -1,0 +1,11 @@
+<a
+  [routerLink]="poll._id"
+  [routerLinkActive]="'active'"
+  class="list-group-item clearfix poll-item"
+  [@slideIn]>
+  <div>
+    <h4 class="list-group-item-heading">{{ poll.title | capitalize}}</h4>
+    <small class="list-group-item-text">Posted by {{ poll.postedBy.username | uppercase}} on {{ poll.createdAt | date }}</small>
+  </div>
+</a>
+

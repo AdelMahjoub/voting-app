@@ -1,0 +1,12 @@
+.form-container {
+  height: 400px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.error {
+  height: 20px;
+  color: red;
+  font-weight: bold;
+  font-size: 14px;
+}

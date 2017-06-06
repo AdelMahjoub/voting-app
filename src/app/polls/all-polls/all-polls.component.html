@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col-xs-12 col-md-6 col-lg-5">
+    <app-polls-list [polls]="polls"></app-polls-list>
+  </div>
+  <!-- Horizontal line for small devices -->
+  <div class="col-xs-12 col-sm-12 visible-xs visible-sm">
+    <hr>
+  </div>
+  
+  <div class="col-xs-12 col-md-6 col-lg-7">
+    <router-outlet></router-outlet>
+  </div>
+</div>

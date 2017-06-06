@@ -1,0 +1,193 @@
+<!-- Server validation messages -->
+<div class="row">
+  <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+    <!-- signup error messages -->
+    <ng-template [ngIf]="signupErrorMessages.length > 0">
+      <div class="alert alert-danger" *ngFor="let errorMsg of signupErrorMessages">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <strong>{{ errorMsg | titlecase }}</strong>
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+<div class="row" [@slideUp]>
+  <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+    <hr>
+    <!-- FormGroup: signupForm-->
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="form-horizontal">
+      <div class="">
+
+        <!-- FormControl: username -->
+        <div class="form-group">
+          <label for="username" class="hidden-xs hidden-sm col-md-2 control-label">Username</label>
+          <div class="col-xs-12 col-md-10">
+            <div class="input-group">
+              <input 
+                type="text" 
+                class="form-control" 
+                id="username"
+                placeholder="Username"
+                [formControlName]="'username'">
+              <!-- valid/error icon-->
+              <div class="input-group-addon">
+                <span 
+                  *ngIf="!username.touched" 
+                  class="glyphicon glyphicon-minus"
+                  [@turn]></span>
+                <span 
+                  *ngIf="username.invalid && username.touched" 
+                  class="glyphicon glyphicon-remove error"
+                  [@turn]></span>
+                <span 
+                  *ngIf="username.valid && username.touched" 
+                  class="glyphicon glyphicon-ok valid"
+                  [@turn]></span>
+              </div>
+            </div>
+            <!-- error message -->
+            <div class="error message">
+              <ng-template [ngIf]="username.invalid && username.touched">
+                <small [@shrink] *ngIf="username.errors['required']">The username is required.</small>
+                <small [@shrink] *ngIf="username.errors['pattern']">Should not contain special chars.</small>
+                <small [@shrink] *ngIf="username.errors['minlength'] && !username.errors['pattern']">Minimum length 4 characters.</small>
+                <small [@shrink] *ngIf="username.errors['usernameInUse']">This username is already registred.</small>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+        <!-- FormControl: email -->
+        <div class="form-group">
+          <label for="email" class="hidden-xs hidden-sm col-md-2 control-label">Email</label>
+          <div class="col-xs-12 col-md-10">
+            <div class="input-group">
+              <input 
+                type="email" 
+                class="form-control" 
+                id="email"
+                placeholder="Email"
+                [formControlName]="'email'">
+              <!-- valid/error icon-->
+              <div class="input-group-addon">
+                <span 
+                  *ngIf="!email.touched" 
+                  class="glyphicon glyphicon-minus"
+                  [@turn]></span>
+                <span 
+                  *ngIf="email.invalid && email.touched" 
+                  class="glyphicon glyphicon-remove error"
+                  [@turn]></span>
+                <span 
+                  *ngIf="email.valid && email.touched" 
+                  class="glyphicon glyphicon-ok valid"
+                  [@turn]></span>
+              </div>
+            </div>
+            <!-- valid/error message -->
+            <div class="error message">
+              <ng-template [ngIf]="email.invalid && email.touched">
+                <small [@shrink] *ngIf="email.errors['required']">The email is required.</small>
+                <small [@shrink] *ngIf="email.errors['email'] && !email.errors['required']">Not a valid email.</small>
+                <small [@shrink] *ngIf="email.errors['emailInUse']">This email address is already registred.</small>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+        
+        <!-- FormControl: password -->
+        <div class="form-group">
+          <label for="password" class="hidden-xs hidden-sm col-md-2 control-label">Password</label>
+          <div class="col-xs-12 col-md-10">
+            <div class="input-group">
+              <input 
+                type="password" 
+                class="form-control" 
+                id="password" 
+                placeholder="Password"
+                [formControlName]="'password'">
+              <!-- valid/error icon-->
+              <div class="input-group-addon">
+                <span 
+                  *ngIf="!password.touched" 
+                  class="glyphicon glyphicon-minus"
+                  [@turn]></span>
+                <span 
+                  *ngIf="password.invalid && password.touched" 
+                  class="glyphicon glyphicon-remove error"
+                  [@turn]></span>
+                <span 
+                  *ngIf="password.valid && password.touched" 
+                  class="glyphicon glyphicon-ok valid"
+                  [@turn]></span>
+              </div>
+            </div>
+            <!-- valid/error message -->
+            <div class="error message">
+              <ng-template [ngIf]="password.invalid && password.touched">
+                <small [@shrink] *ngIf="password.errors['required']">The password is required.</small>
+                <small [@shrink] *ngIf="password.errors['minlength']">Minimum length 6 characters</small>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+        <!-- FormControl: passwordConfirm -->
+        <div class="form-group">
+          <div class="col-xs-12 col-md-10 col-md-offset-2">
+            <div class="input-group">
+              <input 
+                type="password" 
+                class="form-control" 
+                id="password" 
+                placeholder="Confirm password"
+                [formControlName]="'passwordConfirm'">
+              <!-- valid/error icon-->
+              <div class="input-group-addon">
+                <span 
+                  *ngIf="!passwordConfirm.dirty" 
+                  class="glyphicon glyphicon-minus"
+                  [@turn]></span>
+                <span 
+                  *ngIf="passwordConfirm.invalid && passwordConfirm.dirty" 
+                  class="glyphicon glyphicon-remove error"
+                  [@turn]></span>
+                <span 
+                  *ngIf="passwordConfirm.valid && passwordConfirm.dirty" 
+                  class="glyphicon glyphicon-ok valid"
+                  [@turn]></span>
+              </div>
+            </div>
+            <!-- valid/error message -->
+            <div class="error message">
+              <ng-template [ngIf]="passwordConfirm.invalid && passwordConfirm.dirty">
+                <small [@shrink] *ngIf="passwordConfirm.errors['passwordMismatch']">The passwords do not match.</small>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- END OF BS3 JUMBOTRON -->
+
+      <hr>
+
+      <!-- Submit / Reset -->
+      <div class="form-group">
+        <div class="col-xs-12 col-md-10 col-md-offset-2">
+          <div class="pull-right">
+            <button 
+            type="button" 
+            class="btn btn-danger"
+            [disabled]="signupForm.pristine"
+            (click)="onReset()">Reset</button>
+            <button 
+            type="submit" 
+            class="btn btn-primary"
+            [disabled]="signupForm.invalid">Register</button>
+          </div>
+        </div>
+      </div>
+      
+    </form>
+  </div>
+</div>

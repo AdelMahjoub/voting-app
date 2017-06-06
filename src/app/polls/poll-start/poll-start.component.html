@@ -1,0 +1,6 @@
+
+<div 
+  class="alert"
+  [ngClass]="{'alert-info': onDashboard, 'alert-success': !onDashboard}">
+  <strong [innerText]="onDashboard ? dashboardMessage : welcomeMessage"></strong>
+</div>

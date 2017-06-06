@@ -1,0 +1,146 @@
+<!-- form legend -->
+<div class="row" [@slideIn]>
+  <div class="col-xs-12 col-md-12">
+      <legend>{{ formLegend | uppercase}}</legend>
+  </div>
+</div>
+
+<!-- Poll Form -->
+<div class="row" [@slideUp]>
+  <div class="col-xs-12 col-md-12">
+
+    <form (ngSubmit)="onSubmit()" [formGroup]="pollForm">
+      <!-- 4 Buttons: Add option, Reset Form, Submit Form, delete poll -->
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          <button
+            style="margin-left: 5px;" 
+            type="button" 
+            class="btn btn-default pull-right"
+            (click)="onCancel()"
+            title="cancel"><i class="fa fa-ban"></i></button>
+          <button 
+            type="submit" 
+            class="btn btn-primary pull-right"
+            [disabled]="pollForm.invalid || !pollForm.dirty"
+            title="save"><i class="fa fa-floppy-o"></i></button>
+          <button 
+            *ngIf="poll"
+            type="button" 
+            class="btn btn-info"
+            [routerLink]="['../chart', poll._id]"
+            title="chart"><i class="fa fa-bar-chart"></i></button>
+          <button 
+            type="button" 
+            class="btn btn-success"
+            title="tweet"
+            (click)="onTweet()"><i class="fa fa-share"></i></button>
+          <button 
+            type="button" 
+            class="btn btn-default"
+            title="copy url"
+            (click)="onCopy()"><i class="fa fa-link"></i></button>
+
+          <!-- vertical spacing, hidden on small screens -->
+          <span
+            class="hidden-xs" 
+            style="width: 32px; display: inline-block"></span>
+
+          <!-- horizontal line, visible on small screens -->
+          <div class="visible-xs">
+            <hr>
+          </div>
+
+          <button 
+            type="button" 
+            class="btn btn-success"
+            (click)="onAddOption()"
+            title="add option"><i class="fa fa-plus"></i></button>
+          <button 
+            type="button" 
+            class="btn btn-warning"
+            (click)="onReset()"
+            title="reset"><i class="fa fa-refresh"></i></button>
+          <button 
+            type="button" 
+            class="btn btn-danger"
+            (click)="onDelete()"
+            [ngClass]="{'hidden': !poll}"
+            title="delete poll"><i class="fa fa-trash"></i></button>
+        </div>
+      </div>
+
+      <!-- Horizontal line -->
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          <hr>
+        </div>
+      </div>
+
+      <!-- Form Validation -->
+      <div class="error">
+        <div class="row" *ngIf="title.errors">
+          <div class="col-xs-12 col-md-12">
+            <small [@shrink] *ngIf="title.errors['titleExits'] && title.dirty">This title is already used.</small>
+          </div>
+        </div>
+        <div class="row" *ngIf="serverValidationMessages">
+          <div class="col-xs-12 col-md-12">
+            <small [@shrink] *ngFor="let message of serverValidationMessages">{{ message }}.</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Horizontal line -->
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          <hr>
+        </div>
+      </div>
+
+      <div class="well form-container">
+        <!-- Poll Title Field-->
+        <div class="form-group">
+          <label for="title">Title</label>
+          <div class="row">
+            <div class="col-xs-10 col-md-10">
+              <input 
+                type="text" 
+                class="form-control"
+                name="title"
+                [formControlName]="'title'">
+            </div>
+          </div>
+        </div>
+
+        <!-- Options Fields -->
+        <div class="form-group" [formArrayName]="'options'">
+          <label>Options</label>
+          <div
+            class="row" 
+            *ngFor="let option of options['controls']; let i = index" 
+            [formGroupName]="i"
+            style="margin-bottom: 20px;"
+            [@slideInRight]>
+            <div class="col-xs-10 col-md-10">
+              <input 
+                type="text"
+                class="form-control"
+                name="label"
+                [formControlName]="'label'">
+            </div>
+            <div class="col-xs-2 col-md-2">
+              <button 
+                type="button"
+                class="btn btn-danger"
+                (click)="onRemoveOption(i)"
+                [disabled]="options['controls'].length <= 2"
+                title="remove option"><i class="fa fa-minus"></i></button>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- END OF BS3 WELL -->
+    </form>
+  </div><!-- END OF POLL FORM COL -->
+</div><!-- END OF POLL FORM ROW -->
