@@ -2,7 +2,6 @@
  * node modules
  */
 const express = require('express');
-const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const cors = require('cors');
 const path = require('path');
@@ -35,9 +34,11 @@ if(app.get('env') === 'production') {
   }));
 }
 
-app.use(express.static(path.resolve(__dirname, 'public')));
-app.use(cookieParser());
 app.use(routes);
+app.use(express.static(path.resolve(__dirname, 'public')));
+app.use('*', (req, res, next) => {
+  res.sendFile(path.resolve(__dirname, 'public/index.html'));
+})
 
 /**
  * Start server
