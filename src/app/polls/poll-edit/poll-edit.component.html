@@ -31,6 +31,7 @@
             [routerLink]="['../chart', poll._id]"
             title="chart"><i class="fa fa-bar-chart"></i></button>
           <button 
+            *ngIf="poll"
             type="button" 
             class="btn btn-success"
             title="tweet"

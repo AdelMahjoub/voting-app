@@ -1,3 +1,4 @@
+import { ApiService } from './../../shared/api.service';
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 
@@ -23,10 +24,15 @@ export class AuthService {
   userLoggingIn = new Subject();  // Notify some components when user login
   userLoggingOut = new Subject(); // Notify some component when user logout
 
+  baseUrl: string;
+
   constructor(
     private http: Http,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private apiService: ApiService) { 
+      this.baseUrl = apiService.endPoint;
+    }
 
   /**
    * Register User
@@ -38,7 +44,7 @@ export class AuthService {
     const headers = {
       'Content-Type': 'application/JSON'
     }
-    return this.http.post('api/auth/register', user, headers)
+    return this.http.post(this.baseUrl + 'api/auth/register', user, headers)
       .map((response: Response) => {
         return response.json()
       });
@@ -54,7 +60,7 @@ export class AuthService {
     const headers = {
       'Content-Type': 'application/JSON',
     }
-    return this.http.post('api/auth/login', user, headers)
+    return this.http.post(this.baseUrl + 'api/auth/login', user, headers)
       .map((response: Response) => {
         return response.json();
       });
@@ -106,7 +112,7 @@ export class AuthService {
       'Content-Type': 'application/JSON',
     }
     this.getTokenFromStorage();
-    return this.http.post('/api/auth/verify-token', {token: this.jwtToken}, headers)
+    return this.http.post(this.baseUrl + 'api/auth/verify-token', {token: this.jwtToken}, headers)
       .map((response: Response) => {
         let data = response.json();
         if(!data || !data.valid) {
@@ -128,7 +134,7 @@ export class AuthService {
     const headers = {
       'Content-Type': 'application/JSON'
     }
-    return this.http.post('api/auth/check-email', {email: email}, headers)
+    return this.http.post(this.baseUrl + 'api/auth/check-email', {email: email}, headers)
       .map((response: Response) => {
         return response.json();
       });
@@ -143,7 +149,7 @@ export class AuthService {
     const headers = {
       'Content-Type': 'application/JSON'
     }
-    return this.http.post('api/auth/check-username', {username: username}, headers)
+    return this.http.post(this.baseUrl + 'api/auth/check-username', {username: username}, headers)
       .map((response: Response) => {
         return response.json();
       });

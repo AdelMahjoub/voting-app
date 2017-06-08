@@ -16,6 +16,7 @@ import { AuthGuardService } from './../auth/services/auth-guard.service';
 import { NotificationService } from './../shared/notification.service';
 import { RoutesLogService } from './../shared/routes-log.service';
 import { TweetService } from './../shared/tweet.service';
+import { ApiService } from './../shared/api.service';
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import { TweetService } from './../shared/tweet.service';
     CanDeactivateGuard,
     NotificationService,
     RoutesLogService,
-    TweetService
+    TweetService,
+    ApiService
   ],
 })
 export class CoreModule { }
